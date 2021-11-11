@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="popup.css"/>
+</head>
+<body>
+    <script src="popup.js" defer></script>
+    <div class="container">
+        <!-- Source -->
+        <input type="url" id="source_code_url" class="source_url" placeholder="http://localhost:10101/Player.java" required/>
+        <!-- Sync -->
+        <p class="sync_switch_label">Sync code</p>
+        <div id="sync_code" class="switch sync_switch">
+            <input type="checkbox" class="checkbox" id="sync_code_checkbox"/>
+            <div class="knobs"></div>
+            <div class="layer"></div>
+        </div>
+        <!-- Autoplay -->
+        <p class="autoplay_switch_label">Autoplay</p>
+        <div id="autoplay" class="switch autoplay_switch">
+            <input type="checkbox" class="checkbox" id="autoplay_checkbox"/>
+            <div class="knobs"></div>
+            <div class="layer"></div>
+        </div>
+    </div>
+</body>
+</html>

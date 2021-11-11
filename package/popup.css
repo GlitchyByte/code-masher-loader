@@ -1,0 +1,162 @@
+body {
+    /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
+    font-size: 14px;
+}
+
+label, img {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 300px;
+    display: grid;
+    grid-template-areas:
+        "a a a"
+        "b c c"
+        "d e e";
+    grid-template-columns: max-content auto auto;
+    gap: 20px;
+    margin: 20px;
+}
+
+.container .source_url {
+    grid-area: a;
+    place-self: center;
+}
+
+.container .sync_switch_label {
+    grid-area: b;
+    place-self: center end;
+}
+
+.container .sync_switch {
+    grid-area: c;
+    place-self: center start;
+}
+
+.container .autoplay_switch_label {
+    grid-area: d;
+    place-self: center end;
+}
+
+.container .autoplay_switch {
+    grid-area: e;
+    place-self: center start;
+}
+
+.source_url {
+    padding: 10px;
+    border-radius: 8px;
+    border-width: 0;
+    width: 100%;
+    text-align: left;
+    background-color: #d8ffcc;
+}
+
+.source_url:hover {
+    background-color: #b4f5a0;
+}
+
+/* Switch */
+.switch {
+    position: relative;
+    width: 74px;
+    height: 36px;
+    overflow: hidden;
+}
+
+.switch .checkbox {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.switch .knobs, .switch .layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.switch, .switch .layer {
+    border-radius: 100px;
+}
+
+.switch .knobs {
+    z-index: 2;
+}
+
+.switch .layer {
+    width: 100%;
+    background-color: #f3f3f3;
+    transition: 0.3s ease all;
+    z-index: 1;
+}
+
+.switch .knobs:before {
+    content: 'OFF';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 20px;
+    height: 10px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    padding: 9px 4px;
+    background-color: #767676;
+    border-radius: 50%;
+    transition: 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
+}
+
+.switch .checkbox:checked + .knobs:before {
+    content: 'ON';
+    left: 42px;
+    background-color: #60af48;
+}
+
+.switch .checkbox:checked ~ .layer {
+    background-color: #f0f8ee;
+}
+
+.switch .knobs, .switch .knobs:before, .switch .layer {
+    transition: 0.3s ease all;
+}
+
+/* Customize switches. */
+#sync_code.switch .knobs:before,
+#autoplay.switch .knobs:before {
+    /* Text color */
+    color: #222;
+    content: 'OFF';
+    /* OFF knob color. */
+    background-color: #f2f2f2;
+}
+
+#sync_code.switch .layer,
+#autoplay.switch .layer {
+    /* OFF background color. */
+    background-color: #939393;
+}
+
+#sync_code.switch .checkbox:checked + .knobs:before,
+#autoplay.switch .checkbox:checked + .knobs:before {
+    content: 'ON';
+    /* ON knob color. */
+    background-color: #edffe8;
+}
+
+#sync_code.switch .checkbox:checked ~ .layer,
+#autoplay.switch .checkbox:checked ~ .layer {
+    /* ON background color. */
+    background-color: #79d55d;
+}

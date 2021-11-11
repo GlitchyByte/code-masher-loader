@@ -1,0 +1,6 @@
+# IDEs.
+.idea/
+.vscode/
+
+# Local raw assets.
+assets/
