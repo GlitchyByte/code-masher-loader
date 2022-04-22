@@ -1,4 +1,6 @@
-# Code Loader Chrome Plugin for CodinGame challenges
+# Code Loader Chrome Plugin for CodinGame Challenges
+
+![Version](https://img.shields.io/badge/Version-1.1-green)
 
 Chrome plugin for loading and updating code from a server to the CodinGame web IDE.
 

@@ -1,4 +1,4 @@
-// Copyright 2021 GlitchyByte
+// Copyright 2021-2022 GlitchyByte
 // SPDX-License-Identifier: Apache-2.0
 
 // Popup.
@@ -57,7 +57,7 @@ class Popup {
             chrome.scripting.executeScript({
                 target: { tabId: tabId, allFrames: true },
                 files: [ "setup.js" ]
-            }, (results) => {
+            }, results => {
                 resolve()
             })
         })
@@ -69,7 +69,7 @@ class Popup {
     }
 
     restoreState() {
-        chrome.tabs.sendMessage(this.tabId, { message: "get-item", key: "state" }, null, ((response) => {
+        chrome.tabs.sendMessage(this.tabId, { message: "get-item", key: "state" }, null, (response => {
             const state = CodeSyncState.fromJson(response)
             this.sourceUrlElement.value = state.url
             this.syncEnabledElement.checked = state.isSyncEnabled

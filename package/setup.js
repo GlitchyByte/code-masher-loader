@@ -1,4 +1,4 @@
-// Copyright 2021 GlitchyByte
+// Copyright 2021-2022 GlitchyByte
 // SPDX-License-Identifier: Apache-2.0
 
 // Embedded setup.
@@ -15,7 +15,7 @@ if (document.querySelector(".play") && !window.glitchyByteMainFrameContext) {
                 switch (request.message) {
                     case "set-item": return this.setItem(request, sendResponse)
                     case "get-item": return this.getItem(request, sendResponse)
-                    case "update-state": return this.updateState(request, sendResponse)
+                    case "update-state": return this.updateState(request, sender, sendResponse)
                 }
             }
             chrome.runtime.onMessage.addListener(listener.bind(this))
@@ -31,10 +31,11 @@ if (document.querySelector(".play") && !window.glitchyByteMainFrameContext) {
             sendResponse(value)
         }
 
-        updateState(request, sendResponse) {
+        updateState(request, sender, sendResponse) {
             const url = request.url
             const isSyncEnabled = request.isSyncEnabled
             const isAutoplayEnabled = request.isAutoplayEnabled
+            this.sendToSimulationPlayer({ message: "update-autoplay-enabled", isAutoplayEnabled: isAutoplayEnabled })
             if (this.timeoutId) {
                 clearTimeout(this.timeoutId)
                 this.timeoutId = null
@@ -44,6 +45,11 @@ if (document.querySelector(".play") && !window.glitchyByteMainFrameContext) {
                 this.timeoutId = this.scheduleSync(url, isAutoplayEnabled)
             }
             sendResponse()
+        }
+
+        sendToSimulationPlayer(data) {
+            const frame = document.querySelector(".cg-player-sandbox iframe")
+            frame.contentWindow.postMessage(data, "*")
         }
 
         scheduleSync(url, isAutoplayEnabled) {
@@ -60,10 +66,11 @@ if (document.querySelector(".play") && !window.glitchyByteMainFrameContext) {
                         if (text) {
                             return this.dispatchNewProgram(text)
                         }
+                        return false
                     })
-                    .then(changed => {
-                        if (isAutoplayEnabled && changed) {
-                            this.playSimulation()
+                    .then(isChanged => {
+                        if (isAutoplayEnabled && isChanged) {
+                            setTimeout(this.playSimulation.bind(this), 250)
                         }
                         this.timeoutId = this.scheduleSync(url, isAutoplayEnabled)
                     })
@@ -113,11 +120,24 @@ if (document.querySelector(".play-pause-button") && !window.glitchyByteSimulatio
     class GlitchyByteSimulationPlayerContext {
 
         constructor() {
+            this.isAutoplayEnabled = false
             this.timeoutId = null
+            addEventListener("message", (event => {
+                if (!event.origin.startsWith("https://www.codingame.com")) {
+                    return
+                }
+                switch (event.data.message) {
+                    case "update-autoplay-enabled": return this.updateAutoplayEnabled(event.data)
+                }
+            }).bind(this))
             const nextButton = document.querySelector(".next-button")
             const config = { attributes: true }
             const observer = new MutationObserver(this.mutationCallback.bind(this))
             observer.observe(nextButton, config)
+        }
+
+        updateAutoplayEnabled(data) {
+            this.isAutoplayEnabled = data.isAutoplayEnabled
         }
 
         mutationCallback(mutationList, observer) {
@@ -129,9 +149,12 @@ if (document.querySelector(".play-pause-button") && !window.glitchyByteSimulatio
                     this.timeoutId = null
                 }
                 this.timeoutId = setTimeout((() => {
+                    this.timeoutId = null
+                    if (!this.isAutoplayEnabled) {
+                        return
+                    }
                     const playPauseButton = document.querySelector(".play-pause-button")
                     playPauseButton.click()
-                    this.timeoutId = null
                 }).bind(this), 10000)
             }
         }
