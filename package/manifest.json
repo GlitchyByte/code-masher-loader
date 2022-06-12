@@ -1,7 +1,7 @@
 {
-    "name": "CodinGame Code Loader",
+    "name": "CodeMasher Loader",
     "description": "Loads source code to CodinGame IDE.",
-    "version": "1.1",
+    "version": "1.2",
     "author": "GlitchyByte",
     "manifest_version": 3,
     "icons": {
@@ -13,7 +13,7 @@
     "permissions": [ "activeTab", "scripting" ],
     "host_permissions": [ "https://*.codingame.com/ide/*" ],
     "action": {
-        "default_title": "CG Code Loader",
+        "default_title": "CodeMasher Loader",
         "default_popup": "popup.html"
     }
 }

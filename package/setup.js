@@ -74,6 +74,9 @@ if (document.querySelector(".play") && !window.glitchyByteMainFrameContext) {
                         }
                         this.timeoutId = this.scheduleSync(url, isAutoplayEnabled)
                     })
+                    .catch(error => {
+                        this.timeoutId = this.scheduleSync(url, isAutoplayEnabled)
+                    })
             }
             return setTimeout(action.bind(this), 3000);
         }
