@@ -7,7 +7,13 @@ Chrome extension for loading and updating code from a server to the [CodinGame](
 ---
 ## Installing from source
 
+Clone the repository:
+
     git clone git@github.com:GlitchyByte/code-masher-loader.git
+
+Or [download a zip](https://github.com/GlitchyByte/code-masher-loader/archive/refs/heads/main.zip).
+
+Then:
 
 1. Open Chrome.
 2. Go to `Window | Extensions`, make sure `Developer mode` is on.

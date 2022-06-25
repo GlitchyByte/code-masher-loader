@@ -1,5 +1,5 @@
 // Copyright 2021-2022 GlitchyByte
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT-0
 
 // Embedded setup.
 
